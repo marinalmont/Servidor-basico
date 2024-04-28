@@ -15,17 +15,15 @@ const fetchPokemonData = async () => {
 
 const handleRequest = async (req, res) => {
     const pokemonData = await fetchPokemonData();
-    let pathName = decodeURI(req.url); // Decodifica la URL
-    pathName = pathName.substring(1); // Elimina el primer caracter '/'
+    let pathName = decodeURI(req.url);
+    pathName = pathName.substring(1);
     console.log('Identificador de Pokémon:', pathName);
 
     let pokemon;
 
-    // Busca por ID
     if (!isNaN(pathName)) {
         pokemon = pokemonData.find(p => p.id.toString() === pathName);
     } 
-    // Busca por nombre en inglés, japonés, chino o francés
     else {
         pokemon = pokemonData.find(p => 
             Object.values(p.name).some(n => n.toLowerCase() === pathName.toLowerCase())
